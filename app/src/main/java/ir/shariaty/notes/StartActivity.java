@@ -33,6 +33,8 @@ public class StartActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_start);
 
+        checkLoginState();
+
         topAnimation = AnimationUtils.loadAnimation(this,R.anim.top_animation);
         middleAnimation = AnimationUtils.loadAnimation(this,R.anim.middle_animation);
         bottomAnimation = AnimationUtils.loadAnimation(this,R.anim.bottom_animation);
@@ -57,23 +59,24 @@ public class StartActivity extends AppCompatActivity {
         note.setAnimation(middleAnimation);
         sLogon.setAnimation(bottomAnimation);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(StartActivity.this,RegisterActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        },timeout);
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(StartActivity.this, RegisterActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }, timeout);
+        }
 
     }
 
-    protected void onStart() {
-        super.onStart();
-
+    private void checkLoginState() {
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             startActivity(new Intent(StartActivity.this, MainActivity.class));
             finish();
         }
     }
+
 }
