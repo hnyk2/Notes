@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -71,7 +72,7 @@ public class AddNote extends AppCompatActivity {
         else {
             add(noteTitle , noteDate , noteText);
         }
-        
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -83,6 +84,7 @@ public class AddNote extends AppCompatActivity {
         map.put("title",title);
         map.put("date",date);
         map.put("text",text);
+        map.put("publisher", FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         databaseReference.child("Notes").child(noteId).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
