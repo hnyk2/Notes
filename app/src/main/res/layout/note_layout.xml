@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/save_description"
             android:textSize="15sp"
-            android:layout_marginBottom="2dp"/>
+            android:layout_marginBottom="3dp"/>
 
     </RelativeLayout>
 
