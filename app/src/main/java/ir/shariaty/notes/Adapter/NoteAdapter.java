@@ -2,8 +2,10 @@ package ir.shariaty.notes.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -39,7 +41,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NoteAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final NoteAdapter.ViewHolder holder, int position) {
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -48,6 +50,33 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         holder.title.setText(note.getTitle());
         holder.description.setText(note.getDescription());
         holder.date.setText(note.getDate());
+
+        holder.buttonViewOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //show popup menu
+                PopupMenu popup = new PopupMenu(mContext,holder.buttonViewOption);
+                popup.inflate(R.menu.options_menu);
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.edit:
+                                //handle edit click
+                                break;
+                            case R.id.delete:
+                                //handle delete click
+                                break;
+                        }
+                        return false;
+                    }
+                });
+
+                //displaying the popup
+                popup.show();
+
+            }
+        });
 
     }
 
@@ -88,6 +117,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         public TextView title;
         public TextView description;
         public TextView date;
+        public TextView buttonViewOption;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -95,6 +125,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             title = (TextView) itemView.findViewById(R.id.save_title);
             description = (TextView) itemView.findViewById(R.id.save_description);
             date = (TextView) itemView.findViewById(R.id.save_date);
+            buttonViewOption = (TextView) itemView.findViewById(R.id.textViewOptions);
 
         }
     }
