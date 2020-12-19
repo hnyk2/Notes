@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -83,7 +84,7 @@ public class AddNote extends AppCompatActivity {
         map.put("noteID",noteId);
         map.put("title",title);
         map.put("date",date);
-        map.put("text",text);
+        map.put("description",text);
         map.put("publisher", FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         databaseReference.child("Notes").child(noteId).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -91,6 +92,7 @@ public class AddNote extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
                     Toast.makeText(AddNote.this,"NOTE Saved",Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(AddNote.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 }else
                     Toast.makeText(AddNote.this,"NOTE Not Saved",Toast.LENGTH_SHORT).show();
             }

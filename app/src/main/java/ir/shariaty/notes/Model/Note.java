@@ -7,6 +7,10 @@ public class Note {
     private String noteid;
     private String publisher;
 
+
+    public Note() {
+    }
+
     public Note(String title, String description, String date, String noteid, String publisher) {
         this.title = title;
         this.description = description;
