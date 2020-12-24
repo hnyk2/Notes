@@ -28,7 +28,48 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="@null"
+        android:textSize="20sp"
         android:layout_below="@+id/item_date"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:focusable="true"
+        app:backgroundTint="@color/yellowLine"
+        app:srcCompat="@drawable/ic_menu" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/fab_menu"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="39dp"
+        android:layout_marginBottom="7dp"
+        android:clickable="true"
+        android:visibility="invisible"
+        app:backgroundTint="#6EFF9C"
+        app:srcCompat="@drawable/ic_delete" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="9dp"
+        android:layout_marginBottom="30dp"
+        android:layout_toStartOf="@+id/fab_menu"
+        android:clickable="true"
+        android:visibility="invisible"
+        app:backgroundTint="#FFA8A8"
+        app:srcCompat="@drawable/ic_edit" />
 
 
 </RelativeLayout>

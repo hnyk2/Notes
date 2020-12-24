@@ -12,9 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.List;
 
 import ir.shariaty.notes.Model.Note;
@@ -100,7 +97,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             title = (TextView) itemView.findViewById(R.id.save_title);
             description = (TextView) itemView.findViewById(R.id.save_description);
             date = (TextView) itemView.findViewById(R.id.save_date);
-            buttonViewOption = (TextView) itemView.findViewById(R.id.textViewOptions);
             this.onNoteListener=onNoteListener;
             itemView.setOnClickListener(this);
         }
