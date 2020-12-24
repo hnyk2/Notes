@@ -13,7 +13,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -25,8 +25,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
     private Context mContext;
     private List<Note> mNots;
-
-    private FirebaseUser firebaseUser;
+    Note temp;
 
     public NoteAdapter(Context mContext, List<Note> mNots,OnNoteListener onNoteListener) {
         this.mContext = mContext;
@@ -43,22 +42,21 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final NoteAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final NoteAdapter.ViewHolder holder, final int position) {
 
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        Note note = mNots.get(position);
+        final Note note = mNots.get(position);
 
         holder.title.setText(note.getTitle());
         holder.description.setText(note.getDescription());
         holder.date.setText(note.getDate());
-
         holder.buttonViewOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //show popup menu
-                PopupMenu popup = new PopupMenu(mContext,holder.buttonViewOption);
-                popup.inflate(R.menu.options_menu);
+                PopupMenu popup = new PopupMenu(mContext,v);
+                popup.getMenuInflater().inflate(R.menu.options_menu,popup.getMenu());
+                popup.show();
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
@@ -68,6 +66,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
                                 break;
                             case R.id.delete:
                                 //handle delete click
+                                FirebaseDatabase.getInstance().getReference()
+                                       .child("Notes").child("").removeValue();
                                 break;
                         }
                         return true;
@@ -75,7 +75,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
                 });
 
                 //displaying the popup
-                popup.show();
 
             }
         });
@@ -111,6 +110,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         int position = mNots.indexOf(data);
         mNots.remove(position);
         notifyItemRemoved(position);
+        notifyItemRangeChanged(position,mNots.size());
     }
 
 

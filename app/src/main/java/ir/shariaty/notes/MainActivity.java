@@ -85,8 +85,8 @@ public class MainActivity extends AppCompatActivity implements NoteAdapter.OnNot
 
     @Override
     public void onNoteClick(int position) {
-        NoteList.get(position);
         Intent intent = new Intent(this,NoteItemActivity.class);
+        intent.putExtra("selected_note",NoteList.get(position));
         startActivity(intent);
     }
 }
