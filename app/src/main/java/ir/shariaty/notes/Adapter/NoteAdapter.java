@@ -50,34 +50,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         holder.title.setText(note.getTitle());
         holder.description.setText(note.getDescription());
         holder.date.setText(note.getDate());
-        holder.buttonViewOption.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //show popup menu
-                PopupMenu popup = new PopupMenu(mContext,v);
-                popup.getMenuInflater().inflate(R.menu.options_menu,popup.getMenu());
-                popup.show();
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.edit:
-                                //handle edit click
-                                break;
-                            case R.id.delete:
-                                //handle delete click
-                                FirebaseDatabase.getInstance().getReference()
-                                       .child("Notes").child("").removeValue();
-                                break;
-                        }
-                        return true;
-                    }
-                });
-
-                //displaying the popup
-
-            }
-        });
 
     }
 
