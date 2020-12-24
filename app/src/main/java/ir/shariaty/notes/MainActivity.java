@@ -28,7 +28,7 @@ import java.util.List;
 import ir.shariaty.notes.Adapter.NoteAdapter;
 import ir.shariaty.notes.Model.Note;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NoteAdapter.OnNoteListener {
 
     List<Note> NoteList;
     RecyclerView recyclerView;
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         NoteList = fill_with_data();
         recyclerView = (RecyclerView) findViewById(R.id.recView);
-        adapter = new NoteAdapter(getApplication(),NoteList);
+        adapter = new NoteAdapter(getApplication(),NoteList,this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
         fab = findViewById(R.id.floating_action_button);
@@ -83,4 +83,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onNoteClick(int position) {
+        NoteList.get(position);
+        Intent intent = new Intent(this,NoteItemActivity.class);
+        startActivity(intent);
+    }
 }
