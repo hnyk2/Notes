@@ -1,7 +1,6 @@
 package ir.shariaty.notes.Adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +40,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull final NoteAdapter.ViewHolder holder, final int position) {
 
         final Note note = mNotes.get(position);
-        
+
         holder.title.setText(note.getTitle());
         holder.description.setText(note.getDescription());
         holder.date.setText(note.getDate());

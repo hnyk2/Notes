@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="@null"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:layout_below="@+id/edit_toolbar"/>
     <TextView
         android:id="@+id/item_date"
         android:layout_width="match_parent"
@@ -30,6 +31,33 @@
         android:background="@null"
         android:textSize="20sp"
         android:layout_below="@+id/item_date"/>
+
+    <EditText
+        android:id="@+id/edit_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@null"
+        android:fontFamily="serif"
+        android:textColor="?android:attr/textColorHint"
+        android:textSize="24sp"
+        android:inputType="textNoSuggestions"
+        android:layout_below="@+id/edit_toolbar"
+        android:visibility="invisible" />
+    <EditText
+        android:id="@+id/edit_note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textSize="18sp"
+        android:inputType="textNoSuggestions"
+        android:background="@null"
+        android:layout_below="@+id/edit_title"
+        android:visibility="invisible"/>
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_menu"
@@ -70,6 +98,16 @@
         android:visibility="invisible"
         app:backgroundTint="#FFA8A8"
         app:srcCompat="@drawable/ic_edit" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/edit_toolbar"
+        app:title="Notes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:titleTextColor="#FFFFFF" />
 
 
 </RelativeLayout>
