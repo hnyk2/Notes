@@ -1,5 +1,6 @@
 package ir.shariaty.notes;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -7,8 +8,13 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 import ir.shariaty.notes.Model.Note;
 
@@ -27,6 +33,8 @@ public class NoteItemActivity extends AppCompatActivity {
     TextView title;
     TextView date;
     TextView text;
+    String noteId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,12 +53,14 @@ public class NoteItemActivity extends AppCompatActivity {
         date = (TextView) findViewById(R.id.item_date);
         text = (TextView) findViewById(R.id.item_note);
 
+        final Note note1 = getIntent().getParcelableExtra("selected_note");
         if (getIntent().hasExtra("selected_note")){
 
             Note note = getIntent().getParcelableExtra("selected_note");
             title.setText(note.getTitle());
             date.setText(note.getDate());
             text.setText(note.getDescription());
+            noteId=note.getNoteID();
         }
 
         menuFAB.setOnClickListener(new View.OnClickListener() {
@@ -66,6 +76,19 @@ public class NoteItemActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                FirebaseDatabase.getInstance().getReference()
+                        .child("Notes").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(noteId).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            Toast.makeText(NoteItemActivity.this, "note deleted!", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(NoteItemActivity.this,"note doesn't delete", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
             }
         });
 
@@ -76,7 +99,6 @@ public class NoteItemActivity extends AppCompatActivity {
             }
         });
 
-        //end
 
 
     }
@@ -85,10 +107,7 @@ public class NoteItemActivity extends AppCompatActivity {
         setVisibility(clicked);
         setAnimation(clicked);
         setClickable(clicked);
-        if(!clicked)
-            clicked= true;
-        else
-            clicked = false;
+        clicked= !clicked;
 
 
     }

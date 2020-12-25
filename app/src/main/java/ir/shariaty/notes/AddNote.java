@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import saman.zamani.persiandate.PersianDate;
 import saman.zamani.persiandate.PersianDateFormat;
@@ -85,8 +86,9 @@ public class AddNote extends AppCompatActivity {
         map.put("title",title);
         map.put("date",date);
         map.put("description",text);
-        map.put("publisher", FirebaseAuth.getInstance().getCurrentUser().getUid());
+        map.put("publisher", Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid());
 
+        assert noteId != null;
         databaseReference.child("Notes").child(noteId).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

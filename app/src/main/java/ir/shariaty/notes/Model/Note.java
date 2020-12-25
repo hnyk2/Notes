@@ -8,18 +8,18 @@ public class Note implements Parcelable {
     private String title;
     private String description;
     private String date;
-    private String noteid;
+    private String noteID;
     private String publisher;
 
 
     public Note() {
     }
 
-    public Note(String title, String description, String date, String noteid, String publisher) {
+    public Note(String title, String description, String date, String noteID, String publisher) {
         this.title = title;
         this.description = description;
         this.date = date;
-        this.noteid = noteid;
+        this.noteID = noteID;
         this.publisher = publisher;
     }
 
@@ -27,7 +27,7 @@ public class Note implements Parcelable {
         title = in.readString();
         description = in.readString();
         date = in.readString();
-        noteid = in.readString();
+        noteID = in.readString();
         publisher = in.readString();
     }
 
@@ -67,16 +67,16 @@ public class Note implements Parcelable {
         this.date = date;
     }
 
-    public void setNoteid(String noteid) {
-        this.noteid = noteid;
+    public void setNoteID(String noteid) {
+        this.noteID = noteid;
     }
 
     public void setPublisher(String publisher) {
         this.publisher = publisher;
     }
 
-    public String getNoteid() {
-        return noteid;
+    public String getNoteID() {
+        return noteID;
     }
 
     public String getPublisher() {
@@ -93,7 +93,7 @@ public class Note implements Parcelable {
         dest.writeString(title);
         dest.writeString(description);
         dest.writeString(date);
-        dest.writeString(noteid);
+        dest.writeString(noteID);
         dest.writeString(publisher);
     }
 }

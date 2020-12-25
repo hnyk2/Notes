@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements NoteAdapter.OnNot
     RecyclerView recyclerView;
     NoteAdapter adapter;
     FloatingActionButton fab;
+    String publisher = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

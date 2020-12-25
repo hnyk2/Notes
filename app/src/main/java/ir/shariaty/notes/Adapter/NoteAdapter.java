@@ -1,11 +1,10 @@
 package ir.shariaty.notes.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,15 +17,15 @@ import ir.shariaty.notes.Model.Note;
 import ir.shariaty.notes.R;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
+    private static final String TAG = "Id";
     private OnNoteListener mOnNoteListener;
 
     private Context mContext;
-    private List<Note> mNots;
-    Note temp;
+    private List<Note> mNotes;
 
-    public NoteAdapter(Context mContext, List<Note> mNots,OnNoteListener onNoteListener) {
+    public NoteAdapter(Context mContext, List<Note> mNotes,OnNoteListener onNoteListener) {
         this.mContext = mContext;
-        this.mNots = mNots;
+        this.mNotes = mNotes;
         this.mOnNoteListener=onNoteListener;
     }
 
@@ -41,23 +40,23 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull final NoteAdapter.ViewHolder holder, final int position) {
 
-
-        final Note note = mNots.get(position);
-
+        final Note note = mNotes.get(position);
+        
         holder.title.setText(note.getTitle());
         holder.description.setText(note.getDescription());
         holder.date.setText(note.getDate());
+
 
     }
 
     @Override
     public int getItemCount() {
-        return mNots.size();
+        return mNotes.size();
     }
 
     @Override
 
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
 
         super.onAttachedToRecyclerView(recyclerView);
 
@@ -67,7 +66,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
     public void insert(int position, Note data) {
 
-        mNots.add(position, data);
+        mNotes.add(position, data);
 
         notifyItemInserted(position);
 
@@ -76,10 +75,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     // Remove a RecyclerView item containing a specified Data object
 
     public void remove(Note data) {
-        int position = mNots.indexOf(data);
-        mNots.remove(position);
+        int position = mNotes.indexOf(data);
+        mNotes.remove(position);
         notifyItemRemoved(position);
-        notifyItemRangeChanged(position,mNots.size());
+        notifyItemRangeChanged(position,mNotes.size());
     }
 
 
@@ -89,7 +88,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         public TextView title;
         public TextView description;
         public TextView date;
-        public TextView buttonViewOption;
 
         public ViewHolder(@NonNull View itemView ,OnNoteListener onNoteListener) {
             super(itemView);
@@ -104,6 +102,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         @Override
         public void onClick(View v) {
             onNoteListener.onNoteClick(getAdapterPosition());
+
 
         }
     }
