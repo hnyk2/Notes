@@ -2,12 +2,16 @@ package ir.shariaty.notes;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,11 +34,15 @@ public class MainActivity extends AppCompatActivity implements NoteAdapter.OnNot
     RecyclerView recyclerView;
     NoteAdapter adapter;
     FloatingActionButton fab;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        toolbar =  findViewById(R.id.logout_toolbar);
+        setSupportActionBar(toolbar);
 
         NoteList = fill_with_data();
         recyclerView = findViewById(R.id.recView);
@@ -86,5 +94,24 @@ public class MainActivity extends AppCompatActivity implements NoteAdapter.OnNot
         Intent intent = new Intent(this,NoteItemActivity.class);
         intent.putExtra("selected_note",NoteList.get(position));
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.logout_toolbar_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        //log out from firebase
+
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(MainActivity.this, StartActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+        finish();
+
+
+        return super.onOptionsItemSelected(item);
     }
 }
